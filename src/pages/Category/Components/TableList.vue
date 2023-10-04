@@ -6,9 +6,9 @@ import { VDataTable } from 'vuetify/labs/VDataTable'
 import PreloadInterno from '@/components/Prelaod/PreloadInterno.vue'
 
 // --- --- --- Store --- --- ---
-import { useCrudLoanStore } from '@/pages/Loan/Store/useCrudLoanStore'
-const storeLoan = useCrudLoanStore()
-const { action, loans, totalPage, lastPage, currentPage, totalData, loading, typeAction } = storeToRefs(storeLoan)
+import { useCrudCategoryStore } from '@/pages/Category/Store/useCrudCategoryStore'
+const storeCategory = useCrudCategoryStore()
+const { action, categories, totalPage, lastPage, currentPage, totalData, loading, typeAction } = storeToRefs(storeCategory)
 // --- --- END Store --- --- ---
 
 // permission data paginate
@@ -18,7 +18,7 @@ const sort_direction = ref<string>('')
 const sort_field = ref<string>('')
 
 const fetchDataList = async () => {
-  await storeLoan.fetchAll({
+  await storeCategory.fetchAll({
     perPage: rowPerPage.value,
     page: currentPage.value,
     searchQuery: searchQuery.value,
@@ -29,6 +29,8 @@ const fetchDataList = async () => {
 
 const headers = [
   { title: 'Nombre', key: 'name' },
+  { title: 'Imagen', key: 'path' },
+  { title: 'Estado', key: 'state' },
   { title: 'Acciones', sortable: false, key: 'actions' },
 ]
 
@@ -53,17 +55,22 @@ watchArray([currentPage, searchQuery, rowPerPage], async () => {
 
 // 👉 Computing pagination data
 const paginationData = computed(() => {
-  const firstIndex = loans.value.length ? ((currentPage.value - 1) * totalPage.value) + 1 : 0
-  const lastIndex = loans.value.length + ((currentPage.value - 1) * totalPage.value)
+  const firstIndex = categories.value.length ? ((currentPage.value - 1) * totalPage.value) + 1 : 0
+  const lastIndex = categories.value.length + ((currentPage.value - 1) * totalPage.value)
 
   return `Mostrando ${firstIndex} a ${lastIndex} de ${totalData.value} registros`
 })
 
 const changeScreen = async (screen: string, registryId: number | null = null) => {
   action.value = (registryId == null) ? 'new' : 'edit'
-  storeLoan.clearFormulario()
-  storeLoan.typeAction = screen
-  if (registryId) storeLoan.fetchInfo(registryId)
+  storeCategory.clearFormulario()
+  storeCategory.typeAction = screen
+  if (registryId) storeCategory.fetchInfo(registryId)
+}
+
+// Accion cambio de estado
+const changeState = async (object: object, state: number) => {
+  storeCategory.changeState(object, state)
 }
 
 const deleteData = async (id: number) => {
@@ -75,7 +82,7 @@ const deleteData = async (id: number) => {
     denyButtonText: 'No',
   }).then(async result => {
     if (result.isConfirmed) {
-      await storeLoan.fetchDelete(id)
+      await storeCategory.fetchDelete(id)
       await fetchDataList()
     }
   })
@@ -85,10 +92,19 @@ const deleteData = async (id: number) => {
 <template>
   <div>
 
-    <HeaderAlertView title="Listado" sub-title="Prestamos" icon="mdi-format-list-bulleted" />
+    <HeaderAlertView title="Listado" sub-title="Categorias" icon="mdi-format-list-bulleted" />
 
     <VContainer class="bg-vwhite" fluid>
-      <VDataTable :headers="headers" :items="loans" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
+      <VDataTable :headers="headers" :items="categories" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
+        <template #item.state="{ item }">
+          <VSwitch v-model="item.raw.state" color="success" inset :value="item.raw.state" :true-value="1" :false-value="0"
+            hide-details @click="changeState(item.raw, item.raw.state)" />
+        </template>
+        <template #item.path="{ item }">
+          <div class="d-flex align-center py-2" style="width: 10rem;">
+            <VImg :src="item.raw.path" class="rounded" />
+          </div>
+        </template>
         <template #top>
           <VContainer fluid class="d-flex flex-wrap py-4 gap-4">
             <div class="me-3" style="width: 80px;">
@@ -128,7 +144,7 @@ const deleteData = async (id: number) => {
         </template>
         <template v-if="loading" #body>
           <tr>
-            <td colspan="2">
+            <td colspan="4">
               <div style="width: 100;" class="d-flex justify-content-center">
                 <PreloadInterno />
               </div>
@@ -153,3 +169,4 @@ const deleteData = async (id: number) => {
 
   </div>
 </template>
+

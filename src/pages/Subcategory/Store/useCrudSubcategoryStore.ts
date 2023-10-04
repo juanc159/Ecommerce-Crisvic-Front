@@ -1,29 +1,33 @@
 import { useToast } from '@/composables/useToast'
 import IPromise from '@/interfaces/Axios/IPromise'
-import type IForm from '@/pages/Loan/Interfaces/IForm'
-import type IList from '@/pages/Loan/Interfaces/IList'
+import type IForm from '@/pages/Subcategory/Interfaces/IForm'
+import type IList from '@/pages/Subcategory/Interfaces/IList'
 import axiosIns from '@/plugins/axios'
 import { usePreloadStore } from '@/stores/usePreloadStore'
 import { defineStore } from 'pinia'
+import Swal from 'sweetalert2'
 
 const toast = useToast()
 
-export const useCrudLoanStore = defineStore('useCrudLoanStore', {
+export const useCrudSubcategoryStore = defineStore('useCrudSubcategoryStore', {
   state: () => ({
     loading: true as boolean,
     action: "list" as string,
     typeAction: "list" as string,
-    loanData: {} as IForm,
+    subcategoryData: {} as IForm,
     keyList: 0 as number,
-    loans: [] as Array<IList>,
+    subcategories: [] as Array<IList>,
     totalData: 0 as number,
     totalPage: 0 as number,
     currentPage: 1 as number,
     lastPage: 0 as number,
     formulario: {
       id: null,
-      name: '',
+      name: null,
+      category_id: null,
+      path: null
     } as IForm,
+    categories: [] as Array<object>
   }),
   getters: {
   },
@@ -31,17 +35,19 @@ export const useCrudLoanStore = defineStore('useCrudLoanStore', {
     clearFormulario() {
       this.formulario = <IForm>{
         id: null,
-        name: '',
+        name: null,
+        category_id: null,
+        path: null
       }
     },
     async fetchAll(params: object): Promise<void> {
       this.loading = true
       await axiosIns.post(
-        '/loan-list',
+        '/subcategory-list',
         params,
       ).then(result => {
         this.loading = false
-        this.loans = result.data.loans
+        this.subcategories = result.data.subcategories
         this.totalData = result.data.totalData
         this.totalPage = result.data.totalPage
         this.currentPage = result.data.currentPage
@@ -52,13 +58,30 @@ export const useCrudLoanStore = defineStore('useCrudLoanStore', {
       })
     },
 
+    async fetchDataForm(): Promise<void> {
+      this.loading = true
+      await axiosIns.post(
+        '/subcategory-dataForm'
+      ).then(result => {
+        this.loading = false
+        this.categories = result.data.categories
+      }).catch(error => {
+        this.loading = false
+        console.log("error", error)
+      })
+    },
+
 
     async fetchSave(): Promise<IPromise> {
+      const formData = new FormData()
+      for (const key in this.formulario) {
+        formData.append(key, this.formulario[key])
+      }
       const preload = usePreloadStore()
       preload.isLoading = true
       return await axiosIns.post(
-        '/loan-create',
-        this.formulario,
+        '/subcategory-create',
+        formData,
       ).then(result => {
         preload.isLoading = false
         if (result.data.code === 200) {
@@ -80,7 +103,7 @@ export const useCrudLoanStore = defineStore('useCrudLoanStore', {
       const preload = usePreloadStore()
       preload.isLoading = true
       await axiosIns.delete(
-        '/loan-delete/' + id
+        '/subcategory-delete/' + id
       ).then(result => {
         preload.isLoading = false
         toast.toast('Éxito', result.data.message, 'success')
@@ -96,16 +119,46 @@ export const useCrudLoanStore = defineStore('useCrudLoanStore', {
       const preload = usePreloadStore()
       preload.isLoading = true
       await axiosIns.get(
-        `/loan-info/${id}`,
+        `/subcategory-info/${id}`,
       ).then(async result => {
         preload.isLoading = false
-        this.loanData.id = id
+        this.subcategoryData.id = id
         this.formulario = await result.data.data
       }).catch(async error => {
         preload.isLoading = false
         console.log(await error)
       })
 
+    },
+
+
+    changeState(objeto: object, estado: number) {
+      const preload = usePreloadStore()
+      let t = ''
+      estado == 0 ? (t = 'activar') : (t = 'inactivar')
+      Swal.fire({
+        title: `¿Está seguro de ${t} el Registro seleccionado?`,
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: 'No',
+        allowOutsideClick: false,
+      }).then(result => {
+        if (result.isConfirmed) {
+          preload.isLoading = true
+          axiosIns.post('/user-changeState', objeto)
+            .then(res => {
+              preload.isLoading = false
+              if (res.data.code == 200)
+                toast.toast('Éxito', res.data.msg, 'success')
+
+              if (res.data.code == 500)
+                toast.toast('Éxito', res.data.msg, 'danger')
+            })
+        }
+        else {
+          t == 'activar' ? objeto.state = 0 : objeto.state = 1
+        }
+      })
     },
   },
 })

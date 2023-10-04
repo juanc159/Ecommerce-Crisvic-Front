@@ -1,28 +1,30 @@
 import { useToast } from '@/composables/useToast'
 import IPromise from '@/interfaces/Axios/IPromise'
-import type IForm from '@/pages/Thrift/Interfaces/IForm'
-import type IList from '@/pages/Thrift/Interfaces/IList'
+import type IForm from '@/pages/Category/Interfaces/IForm'
+import type IList from '@/pages/Category/Interfaces/IList'
 import axiosIns from '@/plugins/axios'
 import { usePreloadStore } from '@/stores/usePreloadStore'
 import { defineStore } from 'pinia'
+import Swal from 'sweetalert2'
 
 const toast = useToast()
 
-export const useCrudThriftStore = defineStore('useCrudThriftStore', {
+export const useCrudCategoryStore = defineStore('useCrudCategoryStore', {
   state: () => ({
     loading: true as boolean,
     action: "list" as string,
     typeAction: "list" as string,
-    thriftData: {} as IForm,
+    categoryData: {} as IForm,
     keyList: 0 as number,
-    thrifts: [] as Array<IList>,
+    categories: [] as Array<IList>,
     totalData: 0 as number,
     totalPage: 0 as number,
     currentPage: 1 as number,
     lastPage: 0 as number,
     formulario: {
       id: null,
-      name: '',
+      name: null,
+      path: null,
     } as IForm,
   }),
   getters: {
@@ -31,17 +33,18 @@ export const useCrudThriftStore = defineStore('useCrudThriftStore', {
     clearFormulario() {
       this.formulario = <IForm>{
         id: null,
-        name: '',
+        name: null,
+        path: null,
       }
     },
     async fetchAll(params: object): Promise<void> {
       this.loading = true
       await axiosIns.post(
-        '/thrift-list',
+        '/category-list',
         params,
       ).then(result => {
         this.loading = false
-        this.thrifts = result.data.thrifts
+        this.categories = result.data.categories
         this.totalData = result.data.totalData
         this.totalPage = result.data.totalPage
         this.currentPage = result.data.currentPage
@@ -54,11 +57,17 @@ export const useCrudThriftStore = defineStore('useCrudThriftStore', {
 
 
     async fetchSave(): Promise<IPromise> {
+
+      const formData = new FormData()
+      for (const key in this.formulario) {
+        formData.append(key, this.formulario[key])
+      }
+
       const preload = usePreloadStore()
       preload.isLoading = true
       return await axiosIns.post(
-        '/thrift-create',
-        this.formulario,
+        '/category-create',
+        formData,
       ).then(result => {
         preload.isLoading = false
         if (result.data.code === 200) {
@@ -80,7 +89,7 @@ export const useCrudThriftStore = defineStore('useCrudThriftStore', {
       const preload = usePreloadStore()
       preload.isLoading = true
       await axiosIns.delete(
-        '/thrift-delete/' + id
+        '/category-delete/' + id
       ).then(result => {
         preload.isLoading = false
         toast.toast('Éxito', result.data.message, 'success')
@@ -96,16 +105,45 @@ export const useCrudThriftStore = defineStore('useCrudThriftStore', {
       const preload = usePreloadStore()
       preload.isLoading = true
       await axiosIns.get(
-        `/thrift-info/${id}`,
+        `/category-info/${id}`,
       ).then(async result => {
         preload.isLoading = false
-        this.thriftData.id = id
+        this.categoryData.id = id
         this.formulario = await result.data.data
       }).catch(async error => {
         preload.isLoading = false
         console.log(await error)
       })
 
+    },
+
+    changeState(objeto: object, estado: number) {
+      const preload = usePreloadStore()
+      let t = ''
+      estado == 0 ? (t = 'activar') : (t = 'inactivar')
+      Swal.fire({
+        title: `¿Está seguro de ${t} el Registro seleccionado?`,
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: 'No',
+        allowOutsideClick: false,
+      }).then(result => {
+        if (result.isConfirmed) {
+          preload.isLoading = true
+          axiosIns.post('/user-changeState', objeto)
+            .then(res => {
+              preload.isLoading = false
+              if (res.data.code == 200)
+                toast.toast('Éxito', res.data.msg, 'success')
+
+              if (res.data.code == 500)
+                toast.toast('Éxito', res.data.msg, 'danger')
+            })
+        }
+        else {
+          t == 'activar' ? objeto.state = 0 : objeto.state = 1
+        }
+      })
     },
   },
 })

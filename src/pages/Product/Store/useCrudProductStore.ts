@@ -22,8 +22,17 @@ export const useCrudProductStore = defineStore('useCrudProductStore', {
     lastPage: 0 as number,
     formulario: {
       id: null,
-      name: '',
+      name: null,
+      category_id: null,
+      subcategory_id: null,
+      description: null,
+      iva: null,
+      code: null,
+      price: null,
+      images: [],
     } as IForm,
+    categories: [] as Array<object>
+
   }),
   getters: {
   },
@@ -31,7 +40,14 @@ export const useCrudProductStore = defineStore('useCrudProductStore', {
     clearFormulario() {
       this.formulario = <IForm>{
         id: null,
-        name: '',
+        name: null,
+        category_id: null,
+        subcategory_id: null,
+        description: null,
+        iva: null,
+        code: null,
+        price: null,
+        images: [],
       }
     },
     async fetchAll(params: object): Promise<void> {
@@ -53,12 +69,50 @@ export const useCrudProductStore = defineStore('useCrudProductStore', {
     },
 
 
+    async fetchDataForm(): Promise<void> {
+      this.loading = true
+      await axiosIns.post(
+        '/product-dataForm'
+      ).then(result => {
+        this.loading = false
+        this.categories = result.data.categories
+      }).catch(error => {
+        this.loading = false
+        console.log("error", error)
+      })
+    },
+
+
     async fetchSave(): Promise<IPromise> {
+
+      const formData = new FormData()
+      formData.append('id', this.formulario.id)
+      formData.append('name', this.formulario.name)
+      formData.append('category_id', this.formulario.category_id)
+      formData.append('subcategory_id', this.formulario.subcategory_id)
+      formData.append('description', this.formulario.description)
+      formData.append('iva', this.formulario.iva)
+      formData.append('code', this.formulario.code)
+      formData.append('price', this.formulario.price)
+
+
+
+      formData.append('cant_images', this.formulario.images.length)
+      this.formulario.images.forEach((element, key) => {
+        formData.append('image_id' + key, element.id)
+        formData.append('image_principal' + key, element.principal)
+        formData.append('image_file' + key, element.imageFile)
+        formData.append('image_delete' + key, element.delete)
+      });
+
+
+
+
       const preload = usePreloadStore()
       preload.isLoading = true
       return await axiosIns.post(
         '/product-create',
-        this.formulario,
+        formData,
       ).then(result => {
         preload.isLoading = false
         if (result.data.code === 200) {
@@ -107,5 +161,6 @@ export const useCrudProductStore = defineStore('useCrudProductStore', {
       })
 
     },
+
   },
 })

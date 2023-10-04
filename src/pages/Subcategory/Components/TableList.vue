@@ -6,9 +6,9 @@ import { VDataTable } from 'vuetify/labs/VDataTable'
 import PreloadInterno from '@/components/Prelaod/PreloadInterno.vue'
 
 // --- --- --- Store --- --- ---
-import { useCrudThriftStore } from '@/pages/Thrift/Store/useCrudThriftStore'
-const storeThrift = useCrudThriftStore()
-const { action, thrifts, totalPage, lastPage, currentPage, totalData, loading, typeAction } = storeToRefs(storeThrift)
+import { useCrudSubcategoryStore } from '@/pages/Subcategory/Store/useCrudSubcategoryStore'
+const storeSubcategory = useCrudSubcategoryStore()
+const { action, subcategories, totalPage, lastPage, currentPage, totalData, loading, typeAction } = storeToRefs(storeSubcategory)
 // --- --- END Store --- --- ---
 
 // permission data paginate
@@ -18,7 +18,7 @@ const sort_direction = ref<string>('')
 const sort_field = ref<string>('')
 
 const fetchDataList = async () => {
-  await storeThrift.fetchAll({
+  await storeSubcategory.fetchAll({
     perPage: rowPerPage.value,
     page: currentPage.value,
     searchQuery: searchQuery.value,
@@ -28,7 +28,10 @@ const fetchDataList = async () => {
 }
 
 const headers = [
+  { title: 'Categoria', key: 'category_name' },
   { title: 'Nombre', key: 'name' },
+  { title: 'Imagen', key: 'path' },
+  { title: 'Estado', key: 'state' },
   { title: 'Acciones', sortable: false, key: 'actions' },
 ]
 
@@ -53,17 +56,22 @@ watchArray([currentPage, searchQuery, rowPerPage], async () => {
 
 // 👉 Computing pagination data
 const paginationData = computed(() => {
-  const firstIndex = thrifts.value.length ? ((currentPage.value - 1) * totalPage.value) + 1 : 0
-  const lastIndex = thrifts.value.length + ((currentPage.value - 1) * totalPage.value)
+  const firstIndex = subcategories.value.length ? ((currentPage.value - 1) * totalPage.value) + 1 : 0
+  const lastIndex = subcategories.value.length + ((currentPage.value - 1) * totalPage.value)
 
   return `Mostrando ${firstIndex} a ${lastIndex} de ${totalData.value} registros`
 })
 
 const changeScreen = async (screen: string, registryId: number | null = null) => {
   action.value = (registryId == null) ? 'new' : 'edit'
-  storeThrift.clearFormulario()
-  storeThrift.typeAction = screen
-  if (registryId) storeThrift.fetchInfo(registryId)
+  storeSubcategory.clearFormulario()
+  storeSubcategory.typeAction = screen
+  if (registryId) storeSubcategory.fetchInfo(registryId)
+}
+
+// Accion cambio de estado
+const changeState = async (object: object, state: number) => {
+  storeSubcategory.changeState(object, state)
 }
 
 const deleteData = async (id: number) => {
@@ -75,7 +83,7 @@ const deleteData = async (id: number) => {
     denyButtonText: 'No',
   }).then(async result => {
     if (result.isConfirmed) {
-      await storeThrift.fetchDelete(id)
+      await storeSubcategory.fetchDelete(id)
       await fetchDataList()
     }
   })
@@ -85,10 +93,19 @@ const deleteData = async (id: number) => {
 <template>
   <div>
 
-    <HeaderAlertView title="Listado" sub-title="Ahorros" icon="mdi-format-list-bulleted" />
+    <HeaderAlertView title="Listado" sub-title="Sub Categoria" icon="mdi-format-list-bulleted" />
 
     <VContainer class="bg-vwhite" fluid>
-      <VDataTable :headers="headers" :items="thrifts" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
+      <VDataTable :headers="headers" :items="subcategories" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
+        <template #item.state="{ item }">
+          <VSwitch v-model="item.raw.state" color="success" inset :value="item.raw.state" :true-value="1" :false-value="0"
+            hide-details @click="changeState(item.raw, item.raw.state)" />
+        </template>
+        <template #item.path="{ item }">
+          <div class="d-flex align-center py-2" style="width: 10rem;">
+            <VImg :src="item.raw.path" class="rounded" />
+          </div>
+        </template>
         <template #top>
           <VContainer fluid class="d-flex flex-wrap py-4 gap-4">
             <div class="me-3" style="width: 80px;">
@@ -128,7 +145,7 @@ const deleteData = async (id: number) => {
         </template>
         <template v-if="loading" #body>
           <tr>
-            <td colspan="2">
+            <td colspan="5">
               <div style="width: 100;" class="d-flex justify-content-center">
                 <PreloadInterno />
               </div>
