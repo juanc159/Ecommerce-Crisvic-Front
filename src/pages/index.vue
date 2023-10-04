@@ -17,6 +17,7 @@
   </div>
 </template>
 <route lang="yaml">
+path: /dashboard
 meta:
   action: read
   subject: Auth

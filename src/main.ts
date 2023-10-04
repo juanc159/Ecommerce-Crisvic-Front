@@ -12,7 +12,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
 import vue3GoogleLogin from 'vue3-google-login'
-import Components from './components'
+import registerGlobalComponents from './components'
 
 const authClient = "683505111883-dn6k0to7mgfivvlqp60asmhr4arimc9n.apps.googleusercontent.com"
 loadFonts()
@@ -20,6 +20,8 @@ loadFonts()
 // Create vue app
 const app = createApp(App)
 const pinia = createPinia()
+
+registerGlobalComponents(app)
 
 pinia.use(piniaPluginPersistedstate)
 

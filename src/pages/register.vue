@@ -2,7 +2,7 @@
 import IRegister from "@/interfaces/Authentication/IRegister";
 import IErrorsBack from "@/interfaces/Axios/IErrorsBack";
 import { useAuthenticationStore } from '@/stores/useAuthenticationStore';
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue';
+import AuthProvider from '@/pages/Pw/pages/authentication/AuthProvider.vue';
 import authV1BottomShape from '@images/svg/auth-v1-bottom-shape.svg?raw';
 import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?raw';
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer';

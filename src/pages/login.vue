@@ -6,7 +6,7 @@ import { useAuthenticationStore } from '@/stores/useAuthenticationStore'
 import { useCompaniesStore } from '@/pages/Companies/Store/useCompaniesStore'
 const companiesStore = useCompaniesStore()
 // --- --- END Store --- --- ---
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
+import AuthProvider from '@/pages/Pw/pages/authentication/AuthProvider.vue'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
 import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
