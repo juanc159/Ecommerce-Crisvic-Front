@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useSpeciesStore } from '@/stores/species';
+import { useCategoriesStore } from '@/stores/categories';
 import { storeToRefs } from 'pinia';
 import ProductCategoryItem from '@/pages/Pw/Home/Components/ProductCategoryItem.vue';
 import { useProductsStore } from '@/stores/products'
@@ -13,9 +13,9 @@ const { subCategories } = storeToRefs(subCategoriesStore)
 const productsStore = useProductsStore()
 const { filter } = storeToRefs(productsStore)
 
-const speciesStore = useSpeciesStore()
-const { species } = storeToRefs(speciesStore)
-speciesStore.fetchAll();
+const categoriesStore = useCategoriesStore()
+const { categories } = storeToRefs(categoriesStore)
+categoriesStore.fetchAll();
 const router = useRouter()
 
 onMounted(() => {
@@ -37,7 +37,7 @@ onMounted(() => {
         </div>
         <div
           class="row row-cols-xl-4 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1 row--20 justify-content-center">
-          <ProductCategoryItem :category="item" v-for="(item, index) in species" :key="index" />
+          <ProductCategoryItem :category="item" v-for="(item, index) in categories" :key="index" />
         </div>
       </div>
     </div>
@@ -46,11 +46,12 @@ onMounted(() => {
 </template>
 <style scoped>
 .axil-section-gap {
-  padding: 20px 0 !important
+  padding-block: 20px !important;
+  padding-inline: 0 !important;
 }
 
 .section-title-wrapper {
-  margin-bottom: 0px;
-  padding-right: 50px;
+  margin-block-end: 0;
+  padding-inline-end: 50px;
 }
 </style>

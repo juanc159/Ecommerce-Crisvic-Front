@@ -9,6 +9,7 @@ import { usePreloadStore } from "@/stores/usePreloadStore";
 import { useToast } from '@/composables/useToast'
 import type ISubCategory from '@/interfaces/SubCategories/ISubCategory'
 import type ISpecie from '@/interfaces/Species/ISpecie'
+import ICategory from '@/interfaces/Categories/ICategory'
 const toast = useToast()
 export const useProductsStore = defineStore('products', {
   state: () => ({
@@ -18,11 +19,10 @@ export const useProductsStore = defineStore('products', {
     totalPage: ref<number>(0),
     subCategories: ref<Array<ISubCategory>>([]),
     species: ref<Array<ISpecie>>([]),
+    categories: ref<Array<ICategory>>([]),
     currentPage: ref<number>(1),
     filter: ref<IFormProduct>({
-      typeData: "paginate",
-      // empresa_id: 1,
-      empresa_id: 2,
+      typeData: null,
     })
   }),
   getters: {
@@ -45,9 +45,7 @@ export const useProductsStore = defineStore('products', {
   actions: {
     clearFilter() {
       this.filter = {
-        typeData: "paginate",
-        // empresa_id: 1,
-        empresa_id: 2,
+        typeData: null,
       }
     },
     addFilter(key: string, value: string | number | boolean | null | LocationQueryValue[]) {
@@ -58,10 +56,9 @@ export const useProductsStore = defineStore('products', {
       if (Nopreload) {
         preload.isLoading = true
       }
-      axiosIns.post("/product-list", this.filter).then(resp => {
+      axiosIns.post("/product-pw_list", this.filter).then(resp => {
         preload.isLoading = false
-        this.species = resp.data.species
-        console.log("this.species", resp.data);
+        this.categories = resp.data.categories
 
         this.subCategories = resp.data.subCategories
         this.products = resp.data.products

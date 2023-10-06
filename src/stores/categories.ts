@@ -17,8 +17,7 @@ export const useCategoriesStore = defineStore('categories', {
       const preload = usePreloadStore()
       preload.isLoading = true
       axiosIns.post("/category-list", {
-        typeData: "todos",
-        empresa_id: 2
+        typeData: "all",
       }).then(resp => {
         preload.isLoading = false
         this.categories = resp.data.categories

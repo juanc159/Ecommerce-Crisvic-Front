@@ -4,10 +4,10 @@ export function useConfigGlobal() {
   const environment = "https://sandbox.wompi.co/v1"
   // const environment = "https://production.wompi.co/v1"
 
-  const webURL = 'https://system.vetszoo.com'
-  const baseUrl = 'https://system.vetszoo.com'
-  // const webURL = 'http://localhost:5173/'
-  // const baseUrl = 'http://127.0.0.1:8000'
+  // const webURL = 'https://system.vetszoo.com'
+  // const baseUrl = 'https://system.vetszoo.com'
+  const webURL = 'http://localhost:5173/'
+  const baseUrl = 'http://127.0.0.1:8000'
   const baseApi = baseUrl + '/api'
   return {
     webURL,

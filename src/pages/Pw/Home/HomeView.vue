@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import Loading from "@/components/Loading.vue";
 import SliderSection from "@/pages/Pw/Home/Components/SliderSection.vue";
 import ProductSection from "@/pages/Pw/Home/Components/ProductSection.vue";
@@ -23,7 +22,9 @@ import ProductCategorySection from "@/pages/Pw/Home/Components/ProductCategorySe
     </Ecommerce>
   </div>
 </template>
+
 <style lang="scss">
+/* stylelint-disable import-notation */
 @import url("../../../assets/main.scss");
 </style>
 

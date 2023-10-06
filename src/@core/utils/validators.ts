@@ -210,3 +210,13 @@ export const validarDateBeetwen = (dateValue: string, dateInit: string, dateFin:
   // if (validate) return true;
   // else return `Este campo tiene que ser despues de ${d1.format('YYYY-MM-DD')} y hasta ${d2.format('YYYY-MM-DD')}`;
 };
+
+
+export const formatNumberMiles = (value: number | string) => {
+  if (value) {
+    const partes = value.toString().split(',');
+    partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return partes.join(',');
+  }
+  return 0
+}

@@ -6,6 +6,7 @@ import { useSinglePageStore } from '@/stores/singlePage'
 import type IProduct from '@/interfaces/Products/IProduct'
 import { ref } from 'vue';
 import type IGlobal from '@/interfaces/Global/IGlobal';
+import { formatNumberMiles } from '@/@core/utils/validators';
 const singlePageStore = useSinglePageStore()
 
 const authenticationStore = useAuthenticationStore()
@@ -45,7 +46,7 @@ const selectedItem = (action: any) => {
           id: props.product.id,
         },
         query: {
-          product_name: props.product.nombre
+          product_name: props.product.name
         }
       })
 
@@ -58,11 +59,6 @@ const selectedItem = (action: any) => {
   emit("selectedItem", props.product)
 }
 
-const formatNumberMiles = (number: number | string) => {  
-  const partes = number.toString().split(',');
-  partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return partes.join(',');
-}
 
 </script>
 
@@ -76,33 +72,26 @@ const formatNumberMiles = (number: number | string) => {
 
         <div @click="selectedItem('single-page')">
           <a :href="props.href">
-            <img :src="configGlobal.baseUrl + props.product.image" class="main-img" alt="Image-HasTech">
+            <VImg :src="props.product.image_principal.path" class="main-img img-fluid   rounded" />
           </a>
         </div>
 
 
         <div class="label-block label-right">
           <div class="product-badget">20% Off</div>
-
         </div>
 
         <div class="product-hover-action">
           <ul class="cart-action">
             <li class="quickview">
-              <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal">
-                <i class="far fa-eye"></i>
-              </a> -->
 
-              <a   @click="selectedItem('view')" type="button"
-              data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
-              <i class="fa-solid fa-eye"></i>  
+              <a @click="selectedItem('view')" type="button" data-bs-toggle="modal"
+                data-bs-target="#action-QuickViewModal">
+                <VIcon icon="mdi-eye-outline"></VIcon>
               </a>
             </li>
 
             <li class="select-option">
-              <!-- <a href="single-product.html">
-                Add to Cart
-              </a> -->
 
               <a @click="selectedItem('add-cart')" type="button" data-bs-toggle="modal"
                 data-bs-target="#action-CartAddModal">
@@ -113,14 +102,11 @@ const formatNumberMiles = (number: number | string) => {
 
             </li>
             <li class="wishlist">
- 
-              <!-- <a   href="#" ><i class="far fa-heart"></i></a> -->
+
               <a @click="selectedItem('add-like')" type="button" class="btn-product-wishlist" data-bs-toggle="modal"
                 data-bs-target="#action-WishlistModal">
-                <i :class="(props.product.like) ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'"></i>
+                <VIcon class="text-danger" :icon="(props.product.like) ? 'mdi-heart-outline ' : 'mdi-heart'"></VIcon>
               </a>
-
-
             </li>
           </ul>
         </div>
@@ -130,18 +116,18 @@ const formatNumberMiles = (number: number | string) => {
         <div class="inner">
           <div class="product-rating">
             <span class="icon">
-              <i class="fa-solid fa-star"></i> 
-              <i class="fa-solid fa-star"></i> 
-              <i class="fa-solid fa-star"></i> 
-              <i class="fa-solid fa-star"></i> 
-              <i class="fa-solid fa-star"></i> 
+              <VIcon icon="mdi-star"></VIcon>
+              <VIcon icon="mdi-star"></VIcon>
+              <VIcon icon="mdi-star"></VIcon>
+              <VIcon icon="mdi-star"></VIcon>
+              <VIcon icon="mdi-star"></VIcon>
             </span>
-            <span class="rating-number">(64)</span>
+            <!-- <span class="rating-number">(64)</span> -->
           </div>
-          <h5 class="title"><a :href="props.href">{{ props.product.nombre }}</a></h5>
+          <h5 class="title"><a :href="props.href">{{ props.product.name }}</a></h5>
           <div class="product-price-variant">
-            <span class="price current-price">{{ formatNumberMiles(props.product.price_invoicing_app) }}</span>
-            <span class="price old-price">$49.99</span>
+            <span class="price current-price">COP {{ formatNumberMiles(props.product.price) }}</span>
+            <!-- <span class="price old-price">$49.99</span> -->
           </div>
         </div>
       </div>

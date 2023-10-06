@@ -84,7 +84,9 @@ onMounted(() => {
         </div>
         <div class="row">
           <div class="col-lg-12 text-center mt--20 mt_sm--0">
-            <a href="shop.html" class="axil-btn btn-bg-lighter btn-load-more">Ver todos los productos</a>
+            <RouterLink class="axil-btn btn-bg-lighter btn-load-more" :to="{ name: 'shop' }">
+              Ver todos los productos
+            </RouterLink>
           </div>
         </div>
 

@@ -43,7 +43,6 @@ onMounted(() => {
   }
   productStore.addFilter("paginate", 30)
   productStore.fetchAll();
-
 })
 
 const product = ref<IProduct>({
@@ -87,7 +86,7 @@ const selectedItem = (data: IProduct) => {
           <div class="container pt-5">
             <div class="row flex-md-row-reverse justify-content-between">
               <div class="col-lg-9">
-                <div class="row" v-if="products.length > 0">
+                <div class="row" v-if="lastPage > 1 && products.length > 0">
                   <div class="col-lg-12">
                     <div class="axil-shop-top mb--40 d-flex justify-content-between">
                       <nav aria-label="Page navigation">
@@ -128,7 +127,7 @@ const selectedItem = (data: IProduct) => {
                     </div>
                   </div>
                 </div>
-                <div class="row" v-if="products.length > 0">
+                <div class="row" v-if="lastPage > 1 && products.length > 0">
                   <div class="col-lg-12">
                     <div class="axil-shop-top mb--40 d-flex justify-content-between">
                       <nav aria-label="Page navigation">
@@ -178,71 +177,10 @@ const selectedItem = (data: IProduct) => {
     </Ecommerce>
   </div>
 </template>
-<style scoped>
-/* Estilo general para la paginación */
-.pagination {
-  display: flex;
-  margin: 0;
-}
-
-/* Estilo para los elementos de la paginación */
-.page-item {
-  margin: 0 5px;
-  /* Espacio entre los elementos */
-  list-style: none;
-}
-
-/* Estilo para los enlaces de páginas */
-.page-link {
-  font-size: 2rem;
-  padding: 10px 15px;
-  /* Espaciado interno */
-  border: 1px solid #007bff;
-  /* Borde */
-  color: #007bff;
-  /* Color del texto */
-  background-color: #fff;
-  /* Fondo */
-  border-radius: 5px;
-  /* Bordes redondeados */
-  transition: background-color 0.3s, color 0.3s;
-  /* Transición suave */
-}
-
-/* Estilo para el enlace "Previous" y "Next" */
-.page-item:first-child .page-link,
-.page-item:last-child .page-link {
-  border-radius: 5px;
-  /* Bordes redondeados */
-}
-
-/* Estilo para el enlace activo */
-.page-item.active .page-link {
-  background-color: #007bff;
-  /* Fondo activo */
-  color: #fff;
-  /* Texto activo */
-}
-
-/* Estilo para el enlace "Previous" deshabilitado */
-.page-item.disabled .page-link {
-  color: #ccc;
-  /* Texto deshabilitado */
-  pointer-events: none;
-  /* No se puede hacer clic en enlaces deshabilitados */
-}
-
-/* Hover sobre los enlaces */
-.page-link:hover {
-  background-color: #007bff;
-  /* Fondo en hover */
-  color: #fff;
-  /* Texto en hover */
-  text-decoration: none;
-  /* Eliminar subrayado en hover */
-}
+<style lang="scss">
+/* stylelint-disable import-notation */
+@import url("../../../assets/main.scss");
 </style>
-
 <route lang="yaml">
 name: shop
 meta:

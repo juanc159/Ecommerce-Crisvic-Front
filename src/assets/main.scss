@@ -1,6 +1,6 @@
 // @import "node_modules/bootstrap/scss/bootstrap.scss";
 // <!--== Google Fonts ==-->
-@import 'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600&amp;display=swap';
+@import "https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600&amp;display=swap";
 
 // <!--== Bootstrap CSS ==-->
 // @import './css/bootstrap.min.css';
@@ -10,7 +10,7 @@
 // // <!--== 7 Stroke Icon CSS ==-->
 // @import './css/pe-icon-7-stroke.css';
 
-// // <!--== Swiper CSS ==--> 
+// // <!--== Swiper CSS ==-->
 // @import './css/swiper.min.css';
 
 // // <!--== Fancybox Min CSS ==-->
@@ -22,15 +22,91 @@
 // // <!--== Main Style CSS ==-->
 // @import './css/style.css';
 
-@import './css/vendor/bootstrap.min.css';
-@import './css/vendor/font-awesome.css';
-@import './css/vendor/flaticon/flaticon.css';
-@import './css/vendor/slick.css';
-@import './css/vendor/slick-theme.css';
-@import './css/vendor/jquery-ui.min.css';
-@import './css/vendor/sal.css';
-@import './css/vendor/magnific-popup.css';
-@import './css/vendor/base.css';
-@import './css/style.min.css'; 
- 
+@import "./css/vendor/bootstrap.min.css";
+@import "./css/vendor/font-awesome.css";
+@import "./css/vendor/flaticon/flaticon.css";
+@import "./css/vendor/slick.css";
+@import "./css/vendor/slick-theme.css";
+@import "./css/vendor/jquery-ui.min.css";
+@import "./css/vendor/sal.css";
+@import "./css/vendor/magnific-popup.css";
+@import "./css/vendor/base.css";
+@import "./css/style.min.css";
 
+/* Estilo general para la paginación */
+.pagination {
+  display: flex;
+  margin: 0;
+}
+
+/* Estilo para los elementos de la paginación */
+.page-item {
+  /* Espacio entre los elementos */
+  list-style: none;
+  margin-block: 0;
+  margin-inline: 5px;
+}
+
+/* Estilo para los enlaces de páginas */
+.page-link {
+  /* Espaciado interno */
+  border: 1px solid #007bff;
+
+  /* Fondo */
+  border-radius: 5px;
+
+  /* Color del texto */
+  background-color: #fff;
+
+  /* Borde */
+  color: #007bff;
+  font-size: 2rem;
+  padding-block: 10px;
+  padding-inline: 15px;
+
+  /* Bordes redondeados */
+  transition: background-color 0.3s, color 0.3s;
+
+  /* Transición suave */
+}
+
+/* Estilo para el enlace "Previous" y "Next" */
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+  border-radius: 5px;
+
+  /* Bordes redondeados */
+}
+
+/* Estilo para el enlace activo */
+.page-item.active .page-link {
+  background-color: #007bff;
+
+  /* Fondo activo */
+  color: #fff;
+
+  /* Texto activo */
+}
+
+/* Estilo para el enlace "Previous" deshabilitado */
+.page-item.disabled .page-link {
+  color: #ccc;
+
+  /* Texto deshabilitado */
+  pointer-events: none;
+
+  /* No se puede hacer clic en enlaces deshabilitados */
+}
+
+/* Hover sobre los enlaces */
+.page-link:hover {
+  background-color: #007bff;
+
+  /* Fondo en hover */
+  color: #fff;
+
+  /* Texto en hover */
+  text-decoration: none;
+
+  /* Eliminar subrayado en hover */
+}
