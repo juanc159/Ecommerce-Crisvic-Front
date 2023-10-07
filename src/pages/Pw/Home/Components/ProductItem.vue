@@ -105,7 +105,7 @@ const selectedItem = (action: any) => {
 
               <a @click="selectedItem('add-like')" type="button" class="btn-product-wishlist" data-bs-toggle="modal"
                 data-bs-target="#action-WishlistModal">
-                <VIcon class="text-danger" :icon="(props.product.like) ? 'mdi-heart-outline ' : 'mdi-heart'"></VIcon>
+                <VIcon class="text-danger" :icon="(props.product.like) ? 'mdi-heart ' : 'mdi-heart-outline'"></VIcon>
               </a>
             </li>
           </ul>
@@ -135,16 +135,4 @@ const selectedItem = (action: any) => {
 
     <!--== End prPduct Item ==-->
   </div>
-</template>
-<!-- 
-<style>
-.btn-product-wishlist {
-  background-color: #ffffff;
-  border-radius: .5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-}
-</style> -->
+</template> 

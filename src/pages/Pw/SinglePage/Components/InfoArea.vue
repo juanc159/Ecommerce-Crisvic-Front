@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import { useSinglePageStore } from '@/stores/singlePage'
 import { useAuthenticationStore } from '@/stores/authentication'
 import router from '@/router';
+import { formatNumberMiles } from "@/@core/utils/validators";
 const authenticationStore = useAuthenticationStore()
 
 const singlePageStore = useSinglePageStore()
@@ -58,29 +59,28 @@ const selectedItem = (action: any, type: string = "add") => {
 <template>
   <div class="single-product-content">
     <div class="inner">
-      <h3 class="product-title">{{ product.nombre }}</h3>
-      <span class="price-amount">$ {{ product.price_invoicing_app }}</span>
+      <h3 class="product-title">{{ product.name }}</h3>
+      <span class="price-amount">$ {{ formatNumberMiles(product.price) }}</span>
       <ul class="product-meta">
         <li>
-          <span>SKU:</span> &nbsp;
-          {{ product.id }}
+          <span>Código:</span> &nbsp;
+          {{ product.code }}
         </li>
         <li>
           <span>Categoria: </span> &nbsp;
-          <a href="href">{{ product.categoria_nombre }}</a>
+          <a href="href">{{ product.category_name }}</a>
         </li>
         <li>
           <span>Sub Categoria: </span> &nbsp;
-          <a href="href">{{ product.sub_categoria_nombre }}</a>
+          <a href="href">{{ product.subcategory_name }}</a>
         </li>
       </ul>
-      <p class="description">In ornare lorem ut est dapibus, ut tincidunt nisi pretium. Integer ante est,
-        elementum eget magna. Pellentesque sagittis dictum libero, eu dignissim tellus.</p>
+      <p class="description">{{ product.description }}</p>
 
       <div class="product-variations-wrapper">
 
         <!-- Start Product Variation  -->
-        <div class="product-variation">
+        <!-- <div class="product-variation">
           <h6 class="title">Color:</h6>
           <div class="color-variant-wrapper">
             <div class="form-check form-check-inline">
@@ -93,11 +93,11 @@ const selectedItem = (action: any, type: string = "add") => {
             </div>
 
           </div>
-        </div>
+        </div> -->
         <!-- End Product Variation  -->
 
         <!-- Start Product Variation  -->
-        <div class="product-variation">
+        <!-- <div class="product-variation">
           <h6 class="title">Peso:</h6>
 
           <div class="form-check form-check-inline">
@@ -112,27 +112,23 @@ const selectedItem = (action: any, type: string = "add") => {
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option1">
             <label class="form-check-label" for="inlineRadio5">2KG</label>
           </div>
-        </div>
+        </div> -->
         <!-- End Product Variation  -->
 
       </div>
 
       <!-- Start Product Action Wrapper  -->
       <div class="product-action-wrapper d-flex-center">
-
-
-
-
         <!-- Start Product Action  -->
         <ul class="product-action d-flex-center mb--0">
           <li>
             <div class="pro-qty d-flex align-items-center">
-              <button type="button" @click="decrement()" class="btn btn-light btn-sm rounded-start btn-add-quantity">
+              <button type="button" @click="decrement()" class="btn btn-light btn-sm  btn-add-quantity qtybtn ">
                 <i class="fa-solid fa-minus"></i>
               </button>
               <input type="number" v-model="product.quantity"
                 class="input-number-nocontrol form-control text-center mx-2">
-              <button type="button" @click="increment()" class="btn btn-light btn-sm rounded-end btn-add-quantity">
+              <button type="button" @click="increment()" class="btn btn-light btn-sm  qtybtn">
                 <i class="fa-solid fa-plus"></i>
               </button>
             </div>
@@ -158,4 +154,21 @@ const selectedItem = (action: any, type: string = "add") => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.qtybtn {
+  display: block;
+  border: 2px solid rgba(0, 0, 0, 0%);
+  border-radius: 50%;
+  background: #f6f7fb;
+  block-size: 32px;
+  color: #000;
+  cursor: pointer;
+  float: inline-start;
+  font-size: 16px;
+  font-weight: 300;
+  inline-size: 32px;
+  line-height: 26px;
+  text-align: center;
+  transition: 0.3s;
+}
+</style>

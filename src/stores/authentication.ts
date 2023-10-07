@@ -54,7 +54,7 @@ export const useAuthenticationStore = defineStore('authentication', {
     },
     subTotalProductsShoppingCart(store) {
       return store.shoppingCart.reduce((subTotal, currentValue) => {
-        const multi = currentValue.price_invoicing_app ?? 0 * currentValue.quantity
+        const multi = currentValue.price ?? 0 * currentValue.quantity
         return subTotal + multi
       }, 0)
     },
@@ -89,7 +89,7 @@ export const useAuthenticationStore = defineStore('authentication', {
                 id: element.id,
                 nombre: element.nombre,
                 image: element.image,
-                price_invoicing_app: element.price_invoicing_app,
+                price: element.price,
                 quantity: element.quantity
               })
             });
@@ -215,11 +215,11 @@ export const useAuthenticationStore = defineStore('authentication', {
       } else {
         const objeto = {
           id: product.id,
-          nombre: product.nombre,
-          image: product.image,
-          categoria_nombre: product.categoria_nombre,
-          sub_categoria_nombre: product.sub_categoria_nombre,
-          price_invoicing_app: product.price_invoicing_app,
+          name: product.name,
+          image: product.image_principal.path,
+          category_name: product.category_name,
+          subcategory_name: product.subcategory_name,
+          price: product.price,
         }
         this.likes.push(objeto)
       }
@@ -263,9 +263,9 @@ export const useAuthenticationStore = defineStore('authentication', {
       } else {
         this.objetoShoppingCart = {
           id: product.id,
-          nombre: product.nombre,
-          image: product.image,
-          price_invoicing_app: product.price_invoicing_app,
+          name: product.name,
+          image: product.image_principal.path,
+          price: product.price,
           quantity: 0,
         }
 
@@ -273,7 +273,7 @@ export const useAuthenticationStore = defineStore('authentication', {
         else this.objetoShoppingCart.quantity = 1
 
         this.shoppingCart.push(this.objetoShoppingCart)
-        this.objetoShoppingCart = { id: null, image: "", nombre: "string", price_invoicing_app: 0, quantity: 0 }
+        this.objetoShoppingCart = { id: null, image: "", name: "string", price: 0, quantity: 0 }
       }
       this.customerShoppingCartSyncUp()
     },
@@ -321,9 +321,9 @@ export const useAuthenticationStore = defineStore('authentication', {
             result.data.user.shoppingCart.forEach((element: IShoppingCart) => {
               this.shoppingCart.push({
                 id: element.id,
-                nombre: element.nombre,
+                name: element.name,
                 image: element.image,
-                price_invoicing_app: element.price_invoicing_app,
+                price: element.price,
                 quantity: element.quantity
               })
             });

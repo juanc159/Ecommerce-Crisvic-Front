@@ -95,9 +95,9 @@ onMounted(() => {
     <!-- End Expolre Product Area  -->
 
 
-    <ProductQuickViewModal :product="product"></ProductQuickViewModal>
-    <ProductQuickWishlistModal :product="product"></ProductQuickWishlistModal>
-    <ProductQuickAddCartModal :product="product"></ProductQuickAddCartModal>
+    <ProductQuickViewModal></ProductQuickViewModal>
+    <ProductQuickWishlistModal></ProductQuickWishlistModal>
+    <ProductQuickAddCartModal></ProductQuickAddCartModal>
 
   </div>
 </template>

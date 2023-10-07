@@ -12,6 +12,11 @@ import WishlistArea from '@/pages/Pw/ShopWishlist/Components/WishlistArea.vue';
   </Ecommerce>
 </template>
  
+<style lang="scss">
+/* stylelint-disable import-notation */
+@import url("@/assets/main.scss");
+</style>
+
 <route lang="yaml">
 name: shopWishlist
 meta:

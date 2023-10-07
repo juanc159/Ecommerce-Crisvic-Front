@@ -56,7 +56,7 @@ const product = ref<IProduct>({
   categoria_nombre: null,
   sub_categoria_nombre: null,
   image: null,
-  price_invoicing_app: null,
+  price: null,
   nombre: null
 })
 
@@ -80,7 +80,7 @@ const selectedItem = (data: IProduct) => {
       <PageHeaderArea title="Explorar todos los productos" :breadcrumb="['Inicio', 'home', 'Productos']">
       </PageHeaderArea>
 
-      <main class="main-content">
+      <main class="main-content bg-color-white">
         <!--== Start Product Area Wrapper ==-->
         <section class="product-area">
           <div class="container pt-5">
@@ -179,7 +179,7 @@ const selectedItem = (data: IProduct) => {
 </template>
 <style lang="scss">
 /* stylelint-disable import-notation */
-@import url("../../../assets/main.scss");
+@import url("@/assets/main.scss");
 </style>
 <route lang="yaml">
 name: shop

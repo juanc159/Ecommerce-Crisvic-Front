@@ -1,28 +1,28 @@
 <script lang="ts" setup>
-import { Navigation, Pagination, Virtual } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/bundle";
+// import { Navigation, Pagination, Virtual } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/vue";
+// import "swiper/css";
+// import "swiper/css/bundle";
 
 
 
-import { storeToRefs } from "pinia";
-import { useSinglePageStore } from '@/stores/singlePage'
-import { useConfigGlobal } from '@/composables/useConfigGlobal'
-import '@/assets/js/swiper.min.js'
-import { ref } from "vue";
+// import { storeToRefs } from "pinia";
+// import { useSinglePageStore } from '@/stores/singlePage'
+// import { useConfigGlobal } from '@/composables/useConfigGlobal'
+// import '@/assets/js/swiper.min.js'
+// import { ref } from "vue";
 
-const configGlobal = useConfigGlobal()
+// const configGlobal = useConfigGlobal()
 
-const singlePageStore = useSinglePageStore()
-const { product } = storeToRefs(singlePageStore)
-const imagenSelected = product.value.image
+// const singlePageStore = useSinglePageStore()
+// const { product } = storeToRefs(singlePageStore)
+// const imagenSelected = product.value.image
 </script>
 
 <template>
-    <div>
-        <!--== Start Product Thumbnail Area ==-->
-        <div class="product-single-thumb ">
+  <div>
+    <!--== Start Product Thumbnail Area ==-->
+    <!-- <div class="product-single-thumb ">
             <div class="swiper single-product-thumb single-product-thumb-slider">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide"  > 
@@ -43,9 +43,9 @@ const imagenSelected = product.value.image
                     </Swiper> 
                 </div> 
             </div>
-        </div>
-        <!--== End Product Thumbnail Area ==-->
-    </div>
+        </div> -->
+    <!--== End Product Thumbnail Area ==-->
+  </div>
 </template>
 
 <style scoped></style>

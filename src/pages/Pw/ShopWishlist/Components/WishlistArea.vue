@@ -2,13 +2,12 @@
 import { storeToRefs } from 'pinia';
 import object1 from "@/assets/img/imageNotAvailableTbl.png";
 import { useAuthenticationStore } from '@/stores/authentication'
-import { useConfigGlobal } from '@/composables/useConfigGlobal'
 import ProductQuickViewModal from "@/components/Modals/ProductQuickViewModal.vue";
 import { ref } from 'vue';
 import type IGlobal from '@/interfaces/Global/IGlobal'
 import type IProductLike from '@/interfaces/Products/IProductLike';
+import { formatNumberMiles } from '@/@core/utils/validators';
 
-const configGlobal = useConfigGlobal()
 const authenticationStore = useAuthenticationStore()
 const { likes } = storeToRefs(authenticationStore)
 
@@ -31,7 +30,7 @@ const selectedItem = (item: IGlobal) => {
   <div>
 
     <!-- Start Wishlist Area  -->
-    <div class="axil-wishlist-area axil-section-gap">
+    <div class="axil-wishlist-area axil-section-gap bg-color-white">
       <div class="container">
         <div class="product-table-heading">
           <h4 class="title">Mi lista de deseos</h4>
@@ -57,16 +56,16 @@ const selectedItem = (item: IGlobal) => {
                 </td>
                 <td class="product-thumbnail text-center">
                   <a href="single-product.html">
-                    <img :src="configGlobal.baseUrl + item.image">
+                    <img :src="item.image">
                   </a>
                 </td>
                 <td class="product-title">
                   <RouterLink :to="{ name: 'singlePage', params: { id: item.id } }">
-                    {{ item.nombre }}
+                    {{ item.name }}
                   </RouterLink>
                 </td>
                 <td class="product-price" data-title="Price">
-                  <span class="currency-symbol">$</span> {{ item.price_invoicing_app }}
+                  <span class="currency-symbol">$</span> {{ formatNumberMiles(item.price) }}
                 </td>
                 <td class="product-stock-status" data-title="Status">In Stock</td>
                 <td class="product-add-cart text-center">
@@ -81,8 +80,9 @@ const selectedItem = (item: IGlobal) => {
         </div>
       </div>
     </div>
-    <!-- End Wishlist Area  --> 
+    <!-- End Wishlist Area  -->
 
     <ProductQuickViewModal :product="product"></ProductQuickViewModal>
   </div>
 </template> 
+ 

@@ -10,7 +10,7 @@ export default interface IProduct {
   categoria_nombre: string | null,
   sub_categoria_nombre: string | null,
   image: string | null,
-  price_invoicing_app?: number | null,
+  price?: number | null,
   nombre: string | null,
   images?: Array<IProductImages>
 }

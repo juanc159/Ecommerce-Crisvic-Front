@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import FooterBottom from '@/Layout/Footer/Components/FooterBottom.vue';
 import logolight from "@/assets/img/logo.jpg"
 
 </script>
@@ -19,15 +18,15 @@ import logolight from "@/assets/img/logo.jpg"
               <div class=" d-flex justify-content-center ">
                 <ul class="quick-link">
                   <li class="">© 2023. Todos los derechos reservados por
-                    <a   href="#">Crisvic Cakes</a>.
+                    <a href="#">Crisvic Cakes</a>.
                   </li>
                   <li class="">
-                  
+
                     <a href="https://www.facebook.com/crisvicakes" target="_blank"><i class="fab fa-facebook-f"></i></a>
                   </li>
                   <li class="">
                     <a href="https://www.instagram.com/crisvicakes/" target="_blank"><i class="fab fa-instagram"></i></a>
-            
+
                   </li>
                 </ul>
                 <div class="social-share">

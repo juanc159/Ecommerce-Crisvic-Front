@@ -44,7 +44,7 @@ const { species } = storeToRefs(speciesStore)
                         <ul>
                           <li v-for="(item, index) in species" :key="index">
                             <RouterLink :to="{ name: 'shop', query: { specie_id: item.id } }">
-                              {{ item.nombre }}
+                              {{ item.name }}
                             </RouterLink>
                           </li>
                           <li>
@@ -129,9 +129,9 @@ const { species } = storeToRefs(speciesStore)
 </template>
 <style scoped>
 .infoUser {
+  padding: 1rem;
   color: white;
   font-size: 1.5rem;
-  padding: 1rem;
 }
 </style>
  

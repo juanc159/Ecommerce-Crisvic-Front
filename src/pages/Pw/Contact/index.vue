@@ -74,7 +74,7 @@ const enviarMensaje = async () => {
       <PageHeaderArea title="Contacta con nosotros" :breadcrumb="['Inicio', 'home', 'Contacto']"></PageHeaderArea>
 
       <!-- Start Contact Area  -->
-      <div class="axil-contact-page-area axil-section-gap">
+      <div class="axil-contact-page-area axil-section-gap bg-color-white">
         <div class="container">
           <div class="axil-contact-page">
             <div class="row row--30">
@@ -160,6 +160,13 @@ const enviarMensaje = async () => {
 
   </div>
 </template>
+
+<style lang="scss">
+/* stylelint-disable import-notation */
+@import url("@/assets/main.scss");
+</style>
+
+
 
 <style>
 .hover-link:hover {

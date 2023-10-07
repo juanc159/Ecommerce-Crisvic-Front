@@ -29,10 +29,19 @@ import ProductQuickAddCartModal from "@/components/Modals/ProductQuickAddCartMod
     </section>
     <!--== End Product Single Area Wrapper ==-->
 
-    <ProductQuickViewModal  ></ProductQuickViewModal>
-    <ProductQuickWishlistModal  ></ProductQuickWishlistModal>
-    <ProductQuickAddCartModal  ></ProductQuickAddCartModal>
+    <ProductQuickViewModal></ProductQuickViewModal>
+    <ProductQuickWishlistModal></ProductQuickWishlistModal>
+    <ProductQuickAddCartModal></ProductQuickAddCartModal>
   </div>
 </template>
+<style lang="scss">
+/* stylelint-disable import-notation */
+@import url("@/assets/main.scss");
+</style>
 
-<style scoped></style>
+<route lang="yaml">
+name: singlePage
+meta:
+  layout: blank
+</route>
+

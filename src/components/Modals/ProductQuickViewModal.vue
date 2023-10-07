@@ -6,19 +6,11 @@ import { useSinglePageStore } from '@/stores/singlePage'
 const singlePageStore = useSinglePageStore()
 const { product } = storeToRefs(singlePageStore)
 
-const configGlobal = useConfigGlobal()
+const changeImg = (img: string) => {
+  product.value.image_principal.path = img
+}
 
-const props = defineProps({
-  product: {
-    type: Object,
-    required: false
-  },
-  href: {
-    type: String,
-    required: false,
-    default: "#"
-  }
-})
+
 
 </script> 
 
@@ -30,6 +22,9 @@ const props = defineProps({
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <h3 class="modal-title">
+              {{ product.name }}
+            </h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
               <i class="fa-solid fa-xmark"></i>
             </button>
@@ -43,7 +38,7 @@ const props = defineProps({
                       <div
                         class="single-product-thumbnail product-large-thumbnail axil-product thumbnail-badge zoom-gallery">
                         <div class="thumbnail">
-                          <img :src="configGlobal.baseUrl + product.image">
+                          <img :src="product.image_principal.path">
                           <div class="label-block label-right">
                             <div class="product-badget">20% OFF</div>
                           </div>
@@ -51,16 +46,16 @@ const props = defineProps({
                       </div>
                     </div>
                     <div class="col-lg-2 order-lg-1">
-                      <div class="product-small-thumb small-thumb-wrapper">
+                      <div class="product-small-thumb small-thumb-wrapper" v-for="(item, index) in product.images"
+                        :key="index" @click="changeImg(item.path)">
                         <div class="small-thumb-img">
-                          <img :src="configGlobal.baseUrl + product.image">
+                          <img :src="item.path">
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-5 mb--40">
-
                   <InfoArea :all-info="false"></InfoArea>
                 </div>
               </div>
@@ -72,3 +67,18 @@ const props = defineProps({
     <!-- Product Quick View Modal End -->
   </div>
 </template>
+ 
+<style lang="scss" scoped>
+.quick-view-product .modal-header {
+  padding: 10px !important;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+}
+</style>
+
+ 

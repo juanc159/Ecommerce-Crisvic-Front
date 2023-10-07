@@ -25,7 +25,7 @@ import ProductCategorySection from "@/pages/Pw/Home/Components/ProductCategorySe
 
 <style lang="scss">
 /* stylelint-disable import-notation */
-@import url("../../../assets/main.scss");
+@import url("@/assets/main.scss");
 </style>
 
 <route lang="yaml">

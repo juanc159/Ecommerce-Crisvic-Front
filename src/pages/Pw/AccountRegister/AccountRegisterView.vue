@@ -29,9 +29,9 @@ const register = async () => {
   let exito = true
   for (let index = 0; index < directions.value.length; index++) {
     const item = directions.value[index];
-    if (item.nombre == "" || !item.nombre) {
+    if (item.name == "" || !item.name) {
       directionsErrors.value[index].nombre = "El campo es obligatorio"
-      // item.nombre = ''
+      // item.name = ''
       exito = false
     }
     if (item.direccion == "" || !item.direccion) {
@@ -163,7 +163,7 @@ onMounted(() => {
                     <tr v-for="(item, index) in directions" v-show="!item.delete">
                       <td>{{ index + 1 }}</td>
                       <td>
-                        <VTextField :counter="30" max="30" v-model="item.nombre"
+                        <VTextField :counter="30" max="30" v-model="item.name"
                           :error-messages="directionsErrors[index].nombre"
                           @update:model-value="directionsErrors[index].nombre = ''" label="Nombre dirección">
                         </VTextField>
