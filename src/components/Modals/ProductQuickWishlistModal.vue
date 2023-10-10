@@ -21,7 +21,7 @@ const { product } = storeToRefs(singlePageStore)
           </div>
           <div class="modal-body">
             <div class="d-flex justify-content-center align-items-center flex-column">
-              <img class="img-fluid rounded d-block" :src="product.image_principal.path"
+              <img class="img-fluid rounded d-block" :src="product.image_principal?.path"
                 :style="{ width: '466', height: '320' }">
               <h4 class="my-3">{{ product.name }}</h4>
             </div>

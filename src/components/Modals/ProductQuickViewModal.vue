@@ -38,7 +38,7 @@ const changeImg = (img: string) => {
                       <div
                         class="single-product-thumbnail product-large-thumbnail axil-product thumbnail-badge zoom-gallery">
                         <div class="thumbnail">
-                          <img :src="product.image_principal.path">
+                          <img :src="product.image_principal?.path">
                           <div class="label-block label-right">
                             <div class="product-badget">20% OFF</div>
                           </div>
