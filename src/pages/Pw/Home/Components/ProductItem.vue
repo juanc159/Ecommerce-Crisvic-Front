@@ -72,7 +72,7 @@ const selectedItem = (action: any) => {
 
         <div @click="selectedItem('single-page')">
           <a :href="props.href">
-            <VImg :src="props.product.image_principal.path" class="main-img img-fluid   rounded" />
+            <VImg :src="props.product.image_principal?.path" class="main-img img-fluid   rounded" />
           </a>
         </div>
 
