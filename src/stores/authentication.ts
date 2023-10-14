@@ -54,7 +54,7 @@ export const useAuthenticationStore = defineStore('authentication', {
     },
     subTotalProductsShoppingCart(store) {
       return store.shoppingCart.reduce((subTotal, currentValue) => {
-        const multi = currentValue.price ?? 0 * currentValue.quantity
+        const multi = (currentValue.price ?? 0) * Number(currentValue.quantity)
         return subTotal + multi
       }, 0)
     },

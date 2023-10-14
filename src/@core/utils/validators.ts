@@ -218,5 +218,5 @@ export const formatNumberMiles = (value: number | string) => {
     partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return partes.join(',');
   }
-  return 0
+  return ""
 }

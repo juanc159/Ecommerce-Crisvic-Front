@@ -41,7 +41,7 @@ onMounted(() => {
   for (const key in route.query) {
     productStore.addFilter(key, route.query[key])
   }
-  productStore.addFilter("paginate", 30)
+  productStore.addFilter("perPage", 12)
   productStore.fetchAll();
 })
 
@@ -80,9 +80,10 @@ const selectedItem = (data: IProduct) => {
       <PageHeaderArea title="Explorar todos los productos" :breadcrumb="['Inicio', 'home', 'Productos']">
       </PageHeaderArea>
 
-      <main class="main-content bg-color-white">
+      <div class="axil-contact-page-area axil-section-gap bg-color-white">
+
         <!--== Start Product Area Wrapper ==-->
-        <section class="product-area">
+        <section class="product-area mb-5">
           <div class="container pt-5">
             <div class="row flex-md-row-reverse justify-content-between">
               <div class="col-lg-9">
@@ -165,16 +166,16 @@ const selectedItem = (data: IProduct) => {
                 <ShopSidebar></ShopSidebar>
               </div>
             </div>
-
           </div>
         </section>
-      </main>
+        <!--== Start Product Area Wrapper ==-->
 
-      <ProductQuickViewModal :product="product"></ProductQuickViewModal>
-      <ProductQuickWishlistModal :product="product"></ProductQuickWishlistModal>
-      <ProductQuickAddCartModal :product="product"></ProductQuickAddCartModal>
+      </div>
 
     </Ecommerce>
+    <ProductQuickViewModal :product="product"></ProductQuickViewModal>
+    <ProductQuickWishlistModal :product="product"></ProductQuickWishlistModal>
+    <ProductQuickAddCartModal :product="product"></ProductQuickAddCartModal>
   </div>
 </template>
 <style lang="scss">

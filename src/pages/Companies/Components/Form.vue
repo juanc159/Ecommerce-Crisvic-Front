@@ -28,17 +28,17 @@ const changeScreen = async (typeAction: string) => {
   companiesStore.typeAction = typeAction
   await formValidation.value?.resetValidation()
   errors.value = []
-  if( typeAction != 'back' )
+  if (typeAction != 'back')
     companiesStore.keyList++
 }
 
 const submitForm = async () => {
-  if( imageIcon.value.imageFile ) formulario.value.image_icon = imageIcon.value.imageFile
-  if( imageLogo.value.imageFile ) formulario.value.image_logo = imageLogo.value.imageFile
-  if( imageCover.value.imageFile ) formulario.value.image_cover = imageCover.value.imageFile
+  if (imageIcon.value.imageFile) formulario.value.image_icon = imageIcon.value.imageFile
+  if (imageLogo.value.imageFile) formulario.value.image_logo = imageLogo.value.imageFile
+  if (imageCover.value.imageFile) formulario.value.image_cover = imageCover.value.imageFile
 
   const validation = await formValidation.value?.validate()
-  if( validation?.valid ){
+  if (validation?.valid) {
     const data = await companiesStore.fetchSave()
     if (data.code === 200) changeScreen("list");
     if (data.code === 422) errors.value = data.errors ?? []; //muestra error del back
@@ -51,15 +51,13 @@ const submitForm = async () => {
   <div>
 
     <HeaderAlertView sub-title="Cargo" :action="action" :validate-crud="true" :btn-back="true"
-      @changeScreenBack="changeScreen"
-    />
+      @changeScreenBack="changeScreen" />
 
     <VContainer class="bg-vwhite" fluid>
       <VForm ref="formValidation" lazy-validation>
         <VRow>
           <VCol cols="12">
-            <VTextField clearable v-model="formulario.name"
-              :rules="[requiredValidator]" :error-messages="errors.name"
+            <VTextField clearable v-model="formulario.name" :rules="[requiredValidator]" :error-messages="errors.name"
               @keypress="errors.name = ''">
               <template #label>
                 Nombre&nbsp;<b class="text-warning">*</b>
@@ -68,9 +66,8 @@ const submitForm = async () => {
           </VCol>
           <!-- Icon -->
           <VCol cols="12" md="6">
-            <VFileInput accept="image/*" :rules="(authCompany.image_icon)?[]:[requiredValidator]" :key="imageIcon.key"
-              @change.once="imageIcon.handleImageSelected"
-              @click:clear="imageIcon.clearData">
+            <VFileInput accept="image/*" :rules="(authCompany.image_icon) ? [] : [requiredValidator]" :key="imageIcon.key"
+              @change="imageIcon.handleImageSelected" @click:clear="imageIcon.clearData">
               <template #label>
                 Icono&nbsp;<b class="text-warning">*</b>
               </template>
@@ -89,9 +86,8 @@ const submitForm = async () => {
           </VCol>
           <!-- logo -->
           <VCol cols="12" md="6">
-            <VFileInput accept="image/*" :rules="(authCompany.image_logo)?[]:[requiredValidator]" :key="imageLogo.key"
-              @change.once="imageLogo.handleImageSelected"
-              @click:clear="imageLogo.clearData">
+            <VFileInput accept="image/*" :rules="(authCompany.image_logo) ? [] : [requiredValidator]" :key="imageLogo.key"
+              @change="imageLogo.handleImageSelected" @click:clear="imageLogo.clearData">
               <template #label>
                 Logo&nbsp;<b class="text-warning">*</b>
               </template>
@@ -108,9 +104,8 @@ const submitForm = async () => {
           </VCol>
           <!-- image_cover -->
           <VCol cols="12" md="6">
-            <VFileInput accept="image/*" :rules="(authCompany.image_cover)?[]:[requiredValidator]" :key="imageCover.key"
-              @change.once="imageCover.handleImageSelected"
-              @click:clear="imageCover.clearData">
+            <VFileInput accept="image/*" :rules="(authCompany.image_cover) ? [] : [requiredValidator]"
+              :key="imageCover.key" @change="imageCover.handleImageSelected" @click:clear="imageCover.clearData">
               <template #label>
                 Portada&nbsp;<b class="text-warning">*</b>
               </template>
@@ -127,7 +122,7 @@ const submitForm = async () => {
           </VCol>
         </VRow>
 
-        
+
 
         <VDivider class="border-opacity-75 my-4" color="csecundary" :thickness="3" />
         <VRow class="pt-0">
@@ -135,7 +130,8 @@ const submitForm = async () => {
             <VTooltip text="Guardar" location="top">
               <template v-slot:activator="{ props }">
                 <VBtn class="ms-1" color="light" rounded="lg" v-bind="props" @click="submitForm()">
-                  Guardar&nbsp;<VIcon size="large" color="success" icon="mdi-content-save-outline" />
+                  Guardar&nbsp;
+                  <VIcon size="large" color="success" icon="mdi-content-save-outline" />
                 </VBtn>
               </template>
             </VTooltip>

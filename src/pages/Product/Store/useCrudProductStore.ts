@@ -10,6 +10,7 @@ const toast = useToast()
 
 export const useCrudProductStore = defineStore('useCrudProductStore', {
   state: () => ({
+    selectedRadio: 0 as number,
     loading: true as boolean,
     action: "list" as string,
     typeAction: "list" as string,
@@ -155,6 +156,13 @@ export const useCrudProductStore = defineStore('useCrudProductStore', {
         preload.isLoading = false
         this.productData.id = id
         this.formulario = await result.data.data
+
+
+        this.selectedRadio = 0
+        const search = this.formulario.images.findIndex(ele => ele.principal == 1)
+        if (search) {
+          this.selectedRadio = search
+        }
       }).catch(async error => {
         preload.isLoading = false
         console.log(await error)

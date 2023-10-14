@@ -5,7 +5,7 @@ import type { VForm } from 'vuetify/components';
 import { useCrudProductStore } from '@/pages/Product/Store/useCrudProductStore';
 import { useImageUpload } from '@/composables/useImageUpload';
 const storeProduct = useCrudProductStore()
-const { action, formulario, categories } = storeToRefs(storeProduct)
+const { action, formulario, selectedRadio, categories } = storeToRefs(storeProduct)
 
 // --- --- END Store --- --- ---
 
@@ -53,10 +53,19 @@ onMounted(async () => {
   await storeProduct.fetchDataForm()
 })
 
-const selectedRadio = ref(1)
-const addImage = async () => {
-  const validation = await formImagesValidation.value?.validate()
-  if (validation?.valid) {
+
+//funcionalidad imagenes 
+const imagesProducts = computed(() => {
+  return formulario.value.images.filter(ele => ele.delete != 1)
+})
+
+
+const loadingFile = ref<boolean>(false)
+const addImage = (e: Event) => {
+  loadingFile.value = true
+  archive.value.handleImageSelected(e)
+
+  setTimeout(() => {
     formulario.value.images.push({
       id: null,
       imageFile: archive.value.imageFile,
@@ -65,8 +74,25 @@ const addImage = async () => {
       delete: 0
     })
     archive.value.clearData()
-  }
+    loadingFile.value = false
+
+
+  }, 1000)
 }
+
+const checked = (index: number) => {
+  formulario.value.images.forEach(element => {
+    element.principal = 0
+  });
+
+  selectedRadio.value = index
+  formulario.value.images[index].principal = 1
+}
+
+const deleteImg = (obj: object) => {
+  obj.delete = 1
+}
+
 </script>
 
 <template>
@@ -142,31 +168,47 @@ const addImage = async () => {
       <VForm ref="formImagesValidation" lazy-validation>
         <VRow>
           <VCol cols="12" sm="3">
-            <VFileInput accept="image/*" :rules="[requiredValidator]" :key="archive.key"
-              @change.once="archive.handleImageSelected" @click:clear="archive.clearData">
+            <VFileInput :loading="loadingFile" :disabled="loadingFile" accept="image/*" :rules="[requiredValidator]"
+              :key="archive.key" @change="addImage($event)" @click:clear="archive.clearData">
               <template #label>
                 Imagen&nbsp;<b class="text-warning">*</b>
               </template>
             </VFileInput>
           </VCol>
-          <VCol cols="12" sm="3">
+          <!-- <VCol cols="12" sm="3">
             <VBtn size="30" icon color="success" @click="addImage()">
               <VIcon icon="tabler-plus"></VIcon>
             </VBtn>
-          </VCol>
+          </VCol> -->
         </VRow>
       </VForm>
 
-      <VRow>
-        <VCol cols="12" sm="2" v-for="(item, index) in formulario.images" :key="index">
-          <VCard max-width="344">
-            <VImg :src="item.path" cover height="200px"></VImg>
-            <VCardTitle primary-title>principal</VCardTitle>
-          </VCard>
-        </VCol>
-      </VRow>
+      <VRadioGroup v-model="selectedRadio" class="mt-5">
+        <VRow>
+          <VCol cols="12" sm="2" v-for="(item, index) in imagesProducts" :key="index">
+            <VCard max-width="344">
+              <VImg :src="item.path" height="200px"></VImg>
+              <VCardActions class="mt-3">
+                <VRadio label="Principal" :value="index" @click="checked(index)"></VRadio>
 
-      <VRow class="pt-0">
+                {{ index }}
+                <VTooltip text="Eliminar" location="top">
+                  <template v-slot:activator="{ props }">
+                    <VBtn icon color="error" v-bind="props" @click="deleteImg(item)">
+                      <VIcon icon="mdi-trash-can-outline"></VIcon>
+                    </VBtn>
+                  </template>
+                </VTooltip>
+
+
+              </VCardActions>
+            </VCard>
+          </VCol>
+        </VRow>
+      </VRadioGroup>
+
+
+      <VRow class="mt-5">
         <VCol cols="12" class="text-center">
           <VTooltip text="Guardar" location="top">
             <template v-slot:activator="{ props }">

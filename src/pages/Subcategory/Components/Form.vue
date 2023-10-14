@@ -82,7 +82,7 @@ onMounted(async () => {
           </VCol>
           <VCol cols="12" sm="3">
             <VFileInput accept="image/*" :rules="arrayValidation.photo" :key="archive.key"
-              @change.once="archive.handleImageSelected" @click:clear="archive.clearData">
+              @change="archive.handleImageSelected" @click:clear="archive.clearData">
               <template #label>
                 Portada&nbsp;<b class="text-warning">*</b>
               </template>

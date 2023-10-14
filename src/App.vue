@@ -23,6 +23,9 @@ handleSkinChanges()
     <VApp :style="`--v-global-theme-primary: ${hexToRgb(global.current.value.colors.primary)}`">
       <RouterView />
       <ScrollToTop />
+      <Whatsapp />
+
     </VApp>
   </VLocaleProvider>
 </template>
+

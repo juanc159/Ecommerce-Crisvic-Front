@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import logolight from "@/assets/img/logo.jpg"
+import logolight from "@/assets/images/logo.png"
 import { useAuthenticationStore } from '@/stores/authentication'
-import { useSpeciesStore } from '@/stores/species'
 import { storeToRefs } from "pinia";
 const authenticationStore = useAuthenticationStore();
-const speciesStore = useSpeciesStore();
 const { countProductsShoppingCart, countLikes, token, user } = storeToRefs(authenticationStore)
-const { species } = storeToRefs(speciesStore)
 </script>
 
 <template>
@@ -17,7 +14,7 @@ const { species } = storeToRefs(speciesStore)
         <div class="container ">
           <div class="header-navbar">
             <div class="header-brand">
-              <a href="index-2.html" class="logo logo-dark">
+              <a href="#" class="logo logo-dark">
                 <img width="100" :src="logolight" alt="Site Logo">
               </a>
             </div>
@@ -26,7 +23,7 @@ const { species } = storeToRefs(speciesStore)
               <nav class="mainmenu-nav">
                 <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
                 <div class="mobile-nav-brand">
-                  <a href="index-2.html" class="logo">
+                  <a href="#" class="logo">
                     <img :src="logolight" alt="Site Logo">
                   </a>
                 </div>
@@ -40,19 +37,10 @@ const { species } = storeToRefs(speciesStore)
                     <a href="/"><span>Tienda Comercial</span></a>
                     <ul class="axil-submenu">
                       <li>
-                        <a href="#/" class="mega-title">Especies</a>
-                        <ul>
-                          <li v-for="(item, index) in species" :key="index">
-                            <RouterLink :to="{ name: 'shop', query: { specie_id: item.id } }">
-                              {{ item.name }}
-                            </RouterLink>
-                          </li>
-                          <li>
-                            <RouterLink :to="{ name: 'shop' }">
-                              Todos
-                            </RouterLink>
-                          </li>
-                        </ul>
+                        <RouterLink :to="{ name: 'shop' }">
+                          Todos
+                        </RouterLink>
+
                       </li>
                     </ul>
                   </li>

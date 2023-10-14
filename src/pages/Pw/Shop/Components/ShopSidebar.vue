@@ -26,6 +26,7 @@ const search = (key: string, value: string | number | boolean | null, remplace: 
   const queryStr = qs.stringify(newQuery);
   const queryObj = parseQuery(queryStr);
   router.push({ query: queryObj })
+  productStore.addFilter("page", 1)
   productStore.addFilter(key, value)
   productStore.fetchAll()
 }
@@ -71,19 +72,6 @@ const aaa = ref([])
                 {{ item.name }} &nbsp;
                 <span>({{ item.count }})</span>
               </a> -->
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="toggle-list product-price-range active">
-        <h6 class="title">SUB CATEGORIAS</h6>
-        <div class="shop-submenu">
-          <ul>
-            <li v-for="(item, index) in subCategories" :key="index">
-              <a type="button" @click="search('subCategory_id', item.id, true)">
-                {{ item.name }} &nbsp;
-                <span>({{ item.count }})</span>
-              </a>
             </li>
           </ul>
         </div>

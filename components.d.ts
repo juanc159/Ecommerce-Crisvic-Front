@@ -72,5 +72,6 @@ declare module '@vue/runtime-core' {
     TwoFactorAuthDialog: typeof import('./src/components/dialogs/TwoFactorAuthDialog.vue')['default']
     UserInfoEditDialog: typeof import('./src/components/dialogs/UserInfoEditDialog.vue')['default']
     UserUpgradePlanDialog: typeof import('./src/components/dialogs/UserUpgradePlanDialog.vue')['default']
+    Whatsapp: typeof import('./src/components/Whatsapp.vue')['default']
   }
 }

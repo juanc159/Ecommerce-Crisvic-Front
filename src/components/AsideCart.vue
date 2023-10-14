@@ -3,17 +3,13 @@ import { useAuthenticationStore } from '@/stores/authentication'
 import { storeToRefs } from 'pinia';
 import { useConfigGlobal } from '@/composables/useConfigGlobal'
 import FormPayVue from '@/pages/Pw/Wompi/Components/FormPay.vue';
+import { formatNumberMiles } from '@/@core/utils/validators';
 const configGlobal = useConfigGlobal()
 
 
 const authenticationStore = useAuthenticationStore()
 const { shoppingCart, subTotalProductsShoppingCart } = storeToRefs(authenticationStore)
 
-const formatNumberMiles = (number: number | string) => {
-  const partes = number.toString().split(',');
-  partes[0] = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return partes.join(',');
-}
 
 const closeAsideOffcanvasCart = (number: number | string) => {
   setTimeout(() => {
@@ -66,11 +62,11 @@ const closeAsideOffcanvasCart = (number: number | string) => {
                 <img :src="item.image" width="90" height="110" alt="Image-HasTech">
                 <span class="product-title">{{ item.name }}</span>
               </a>
-              <span class=" ">{{ item.quantity }} × {{ item.price }}</span>
+              <span class=" ">{{ item.quantity }} × {{ formatNumberMiles(item.price) }}</span>
             </li>
           </ul>
           <p class="cart-total">
-            <span>Subtotal:</span><span class="amount">{{ formatNumberMiles(subTotalProductsShoppingCart) }}</span>
+            <span>Subtotal: </span><span class="amount"> {{ formatNumberMiles(subTotalProductsShoppingCart) }}</span>
           </p>
 
           <div class="group-btn d-flex justify-content-around">

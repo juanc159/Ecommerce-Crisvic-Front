@@ -70,16 +70,14 @@ const selectedItem = (action: any) => {
       <div class="thumbnail">
 
 
-        <div @click="selectedItem('single-page')">
-          <a :href="props.href">
-            <VImg :src="props.product.image_principal?.path" class="main-img img-fluid   rounded" />
-          </a>
+        <div @click="selectedItem('single-page')" style="cursor: pointer;">
+          <VImg :src="props.product.image_principal?.path" class="main-img img-fluid   rounded" />
         </div>
 
 
-        <div class="label-block label-right">
+        <!-- <div class="label-block label-right">
           <div class="product-badget">20% Off</div>
-        </div>
+        </div> -->
 
         <div class="product-hover-action">
           <ul class="cart-action">
@@ -93,8 +91,8 @@ const selectedItem = (action: any) => {
 
             <li class="select-option">
 
-              <a @click="selectedItem('add-cart')" type="button" data-bs-toggle="modal"
-                data-bs-target="#action-CartAddModal">
+              <a style="font-size: 1.2rem !important;" @click="selectedItem('add-cart')" type="button"
+                data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
                 <i class="fa-solid fa-bag-shopping"></i>
                 Añadir al carrito
               </a>
@@ -116,11 +114,11 @@ const selectedItem = (action: any) => {
         <div class="inner">
           <div class="product-rating">
             <span class="icon">
-              <VIcon icon="mdi-star"></VIcon>
-              <VIcon icon="mdi-star"></VIcon>
-              <VIcon icon="mdi-star"></VIcon>
-              <VIcon icon="mdi-star"></VIcon>
-              <VIcon icon="mdi-star"></VIcon>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
             </span>
             <!-- <span class="rating-number">(64)</span> -->
           </div>

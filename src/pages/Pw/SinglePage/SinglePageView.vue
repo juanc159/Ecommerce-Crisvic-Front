@@ -8,32 +8,38 @@ import ProductQuickAddCartModal from "@/components/Modals/ProductQuickAddCartMod
 
 <template>
   <div>
-    <!--== Start Product Single Area Wrapper ==-->
-    <section class="product-area product-single-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="product-single-item">
+    <Ecommerce>
+
+      <main class="main-wrapper">
+        <!-- Start Shop Area  -->
+        <div class="axil-single-product-area axil-section-gap pb--0 bg-color-white">
+          <div class="single-product-thumb mb--40">
+            <div class="container">
               <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-7 mb--40">
                   <ThumbnailArea></ThumbnailArea>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-5 mb--40">
                   <InfoAreaVue></InfoAreaVue>
                 </div>
               </div>
             </div>
           </div>
+          <!-- End .single-product-thumb -->
+
         </div>
-      </div>
-    </section>
-    <!--== End Product Single Area Wrapper ==-->
+        <!-- End Shop Area  -->
+
+      </main>
+
+    </Ecommerce>
 
     <ProductQuickViewModal></ProductQuickViewModal>
     <ProductQuickWishlistModal></ProductQuickWishlistModal>
     <ProductQuickAddCartModal></ProductQuickAddCartModal>
   </div>
 </template>
+
 <style lang="scss">
 /* stylelint-disable import-notation */
 @import url("@/assets/main.scss");
