@@ -31,7 +31,11 @@ const search = (key: string, value: string | number | boolean | null, remplace: 
   productStore.fetchAll()
 }
 
-const aaa = ref([])
+const resetFilter = () => {
+  router.push({ query: {} })
+
+}
+
 </script>
 
 <template>
@@ -60,12 +64,19 @@ const aaa = ref([])
           <ul>
             <li v-for="(item, index) in categories" :key="index">
               <div class="form-check">
-                <input :id="'radio' + item.id" :name="'radio'" v-model="aaa" @click="search('category_id', item.id, true)"
-                  class="form-check-input" type="radio">
-                <label class="form-check-label" :for="'radio' + item.id">
-                  {{ item.name }} &nbsp;
-                  <span>({{ item.count }})</span>
-                </label>
+                <VRow>
+                  <VCol sm="1">
+                    <VIcon icon="tabler-check" v-show="router.currentRoute.value.query.category_id == item.id"></VIcon>
+
+                  </VCol>
+                  <VCol>
+
+                    <label style="cursor: pointer;" @click="search('category_id', item.id, true)">
+                      {{ item.name }} &nbsp;
+                      <span>({{ item.count }})</span>
+                    </label>
+                  </VCol>
+                </VRow>
               </div>
 
               <!-- <a type="button" @click="search('category_id', item.id, true)">
@@ -76,7 +87,7 @@ const aaa = ref([])
           </ul>
         </div>
       </div>
-      <button class="axil-btn btn-bg-primary">All Reset</button>
+      <button class="axil-btn btn-bg-primary" @click="search('category_id', null, true)">Limpiar filtro</button>
     </div>
     <!-- End .axil-shop-sidebar -->
 

@@ -37,10 +37,7 @@ const submitForm = async () => {
 }
 
 const addFile = (e: Event) => {
-
   archive.value.handleImageSelected(e)
-
-
   setTimeout(() => {
     formulario.value.path = archive.value.imageFile
 

@@ -2,8 +2,13 @@
 import logolight from "@/assets/images/logo.png"
 import { useAuthenticationStore } from '@/stores/authentication'
 import { storeToRefs } from "pinia";
+import { useCategoriesStore } from '@/stores/categories';
 const authenticationStore = useAuthenticationStore();
 const { countProductsShoppingCart, countLikes, token, user } = storeToRefs(authenticationStore)
+
+const categoriesStore = useCategoriesStore()
+const { categories } = storeToRefs(categoriesStore)
+
 </script>
 
 <template>
@@ -41,6 +46,11 @@ const { countProductsShoppingCart, countLikes, token, user } = storeToRefs(authe
                           Todos
                         </RouterLink>
 
+                      </li>
+                      <li v-for="(item, index) in categories" :key="index">
+                        <RouterLink :to="{ name: 'shop', query: { category_id: item.id } }">
+                          {{ item.name }}
+                        </RouterLink>
                       </li>
                     </ul>
                   </li>

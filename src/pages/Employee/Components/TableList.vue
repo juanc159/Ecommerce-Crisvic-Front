@@ -85,7 +85,7 @@ const deleteData = async (id: number) => {
 <template>
   <div>
 
-    <HeaderAlertView title="Listado" sub-title="Empelados" icon="mdi-format-list-bulleted" />
+    <HeaderAlertView title="Listado" sub-title="Empleados" icon="mdi-format-list-bulleted" />
 
     <VContainer class="bg-vwhite" fluid>
       <VDataTable :headers="headers" :items="employees" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">

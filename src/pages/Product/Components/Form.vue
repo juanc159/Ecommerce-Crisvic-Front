@@ -4,9 +4,10 @@ import type { VForm } from 'vuetify/components';
 // --- --- --- Store --- --- ---
 import { useCrudProductStore } from '@/pages/Product/Store/useCrudProductStore';
 import { useImageUpload } from '@/composables/useImageUpload';
+import { useToast } from '@/composables/useToast';
 const storeProduct = useCrudProductStore()
 const { action, formulario, selectedRadio, categories } = storeToRefs(storeProduct)
-
+const { toast } = useToast()
 // --- --- END Store --- --- ---
 
 // File
@@ -29,6 +30,10 @@ const changeScreen = async (typeAction: string) => {
 }
 
 const submitForm = async () => {
+  if (imagesProducts.value.length == 0) {
+    toast("Alerta", "Debe agregar almenos una imagen al producto", "danger")
+    return false
+  }
   const validation = await formValidation.value?.validate()
   if (validation?.valid) {
     const data = await storeProduct.fetchSave()
@@ -63,7 +68,12 @@ const imagesProducts = computed(() => {
 const loadingFile = ref<boolean>(false)
 const addImage = (e: Event) => {
   loadingFile.value = true
-  archive.value.handleImageSelected(e)
+  const resp = archive.value.handleImageSelected(e)
+
+  if (!resp) {
+    loadingFile.value = false
+    return false
+  }
 
   setTimeout(() => {
     formulario.value.images.push({
@@ -171,7 +181,7 @@ const deleteImg = (obj: object) => {
             <VFileInput :loading="loadingFile" :disabled="loadingFile" accept="image/*" :rules="[requiredValidator]"
               :key="archive.key" @change="addImage($event)" @click:clear="archive.clearData">
               <template #label>
-                Imagen&nbsp;<b class="text-warning">*</b>
+                Imagen&nbsp;
               </template>
             </VFileInput>
           </VCol>
@@ -185,7 +195,7 @@ const deleteImg = (obj: object) => {
 
       <VRadioGroup v-model="selectedRadio" class="mt-5">
         <VRow>
-          <VCol cols="12" sm="2" v-for="(item, index) in imagesProducts" :key="index">
+          <VCol cols="12" lg="3" sm="5" v-for="(item, index) in imagesProducts" :key="index">
             <VCard max-width="344">
               <VImg :src="item.path" height="200px"></VImg>
               <VCardActions class="mt-3">

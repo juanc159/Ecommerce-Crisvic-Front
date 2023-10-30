@@ -130,7 +130,7 @@ export const useCrudCategoryStore = defineStore('useCrudCategoryStore', {
       }).then(result => {
         if (result.isConfirmed) {
           preload.isLoading = true
-          axiosIns.post('/user-changeState', objeto)
+          axiosIns.post('/category-changeState', objeto)
             .then(res => {
               preload.isLoading = false
               if (res.data.code == 200)

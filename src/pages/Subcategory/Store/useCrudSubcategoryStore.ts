@@ -145,7 +145,7 @@ export const useCrudSubcategoryStore = defineStore('useCrudSubcategoryStore', {
       }).then(result => {
         if (result.isConfirmed) {
           preload.isLoading = true
-          axiosIns.post('/user-changeState', objeto)
+          axiosIns.post('/subcategory-changeState', objeto)
             .then(res => {
               preload.isLoading = false
               if (res.data.code == 200)
